@@ -1,17 +1,19 @@
-# from aiogram import Router,F,Bot
-# from aiogram.filters import CommandStart
-# from aiogram.types import Message
-# from aiogram.fsm.context import FSMContext
+from aiogram import Router,F,Bot
+from aiogram.filters import CommandStart
+from aiogram.types import Message
+from aiogram.fsm.context import FSMContext
+
+from data.database import ViewDB
+from keyboards.admin.btn_builder import view_opt
+
+veiw_router = Router()
+view_db = ViewDB()
 
 
-
-
-# veiw_router = Router()
-
-
-# @veiw_router.message(F.text == 'Посмотреть все задачи👀' )
-# async def veiw_all_list(message: Message):
-
-#     task.get_all_list_task()
-#     for d in  task.data:
-#         await message.answer_photo(photo=d[4], caption=f'title: {d[3]}\ncategoria: {d[5]}\ncontent: {d[1]}\n')
+@veiw_router.message(F.text == 'Задачи' )
+async def veiw_all_list(message: Message):
+    title = ''
+    for i in view_db.view_two_with_photo():
+        title += i
+        if title==i:
+            await message.answer(text=view_db(),)

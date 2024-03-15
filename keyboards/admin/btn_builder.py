@@ -1,5 +1,7 @@
-from aiogram.types import ReplyKeyboardMarkup,KeyboardButton,ReplyKeyboardRemove
-from aiogram.utils.keyboard import ReplyKeyboardBuilder, KeyboardBuilder
+from aiogram.types import ReplyKeyboardMarkup,KeyboardButton,ReplyKeyboardRemove, InlineKeyboardButton
+from aiogram.utils.keyboard import InlineKeyboardBuilder
+
+from data.database import ViewDB
 
 def level_btn():
     button_list = ['A1','A2','B1','B2','C1','C2']
@@ -28,3 +30,12 @@ def option_task():
     button_options = ReplyKeyboardMarkup(keyboard=[[KeyboardButton(text='Добавить вариянт ✏️')],
                                                    [KeyboardButton(text='Стоп ⛔')]])
     return button_options
+
+def view_opt(content_id):
+    view = ViewDB()
+    button = InlineKeyboardBuilder()
+    for i in view.view_options():
+        for j in i[1]:
+            button.row(InlineKeyboardButton(text=j))
+    return button.as_markup()
+# view_opt()

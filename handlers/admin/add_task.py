@@ -41,18 +41,13 @@ async def text_content(message:Message,state: FSMContext):
     global content
     await state.update_data(name=message.text)
     content = message.text
-    await state.set_state(TaskState.categoria)
-    await message.answer('Введите вариянт - ',reply_markup = option_task())
-@reg_router.message(F.text == 'Добавить вариянт ✏️')
+    await state.set_state(TaskState.options)
+    await message.answer('ВВедите вариянт 1 2 3 4(1- это вариянт а, 2 - это б, 3 - это в) ')
+    print(content)
+@reg_router.message(TaskState.options,F.text)
 async def text_content(message:Message, state:FSMContext):
     global option
-    await message.answer('ВВедите вариянт 1 2 3 4(1- это вариянт а, 2 - это б, 3 - это в) ')
     option = message.text.split(' ')
-    await state.set_state(TaskState.categoria)
-    await message.answer('Выберите категория - ',reply_markup = select_categoria())
-
-@reg_router.message(F.text )
-async def text_content(message:Message, state:FSMContext):
     await state.set_state(TaskState.categoria)
     await message.answer('Выберите категория - ',reply_markup = select_categoria())
 
@@ -63,7 +58,7 @@ async def text_level(message:Message,state: FSMContext):
     categoria = message.text
     await state.set_state(TaskState.level)
     await message.answer('Выберите уровень',reply_markup = level_btn())
-
+    print(categoria)
 @reg_router.message(TaskState.level,F.text)
 async def text_level(message:Message,state: FSMContext):
     global level
@@ -71,14 +66,13 @@ async def text_level(message:Message,state: FSMContext):
     level = message.text
     await message.answer('Есть фото на этом вопросе?',reply_markup=opros)
     await state.set_state(TaskState.photo)
-
+    print(level)
 @reg_router.message(F.text == 'No')
 async def text_opros(message:Message):
     await message.answer('Succes✅',reply_markup=main())
-    level_id = get_task_id.get_id_level(level=level)
-    cate_id = get_task_id.get_id_categoria(title=categoria)
-    task_id = get_task_id.get_id_two(content=content)
-    add_task_db.add_task_with_options(level_id=level_id,cate_id=cate_id,content=content)
+    add_task_db.add_task_with_options_without_photo(level_id=get_task_id.get_id_level(level=level),cate_id=get_task_id.get_id_categoria(title=categoria),content=content)
+    for opt in option:
+        add_task_db.add_options(option=opt,task_id=get_task_id.get_id_two(content=content))
 
 @reg_router.message(F.text == 'Yes')
 async def text_p(message:Message,state: FSMContext,bot:Bot):
@@ -92,9 +86,7 @@ async def text_photo(message:Message,state: FSMContext,bot:Bot):
     user_id = message.from_user.id
     photo = message.photo[-1].file_id
     await message.answer('Succes✅',reply_markup=main())
-    level_id_1 = get_task_id.get_id_level(level=level)
-    cate_id_1 = get_task_id.get_id_categoria(title=categoria)
-    add_task_db.add_task_with_options(level_id=level_id_1,photo_id=photo,cate_id=cate_id_1,content=content)
-    task_id_1 = get_task_id.get_id_two(content=content)
+    add_task_db.add_task_with_options(level_id = get_task_id.get_id_level(level=level),photo_id=photo,cate_id =get_task_id.get_id_categoria(title=categoria),content=content)
     for opt in option:
-        add_task_db.add_options(option=opt,task_id=task_id_1)
+        add_task_db.add_options(option=opt,task_id=get_task_id.get_id_two(content=content))
+    add_task_db.add_answer(answer=option[0])

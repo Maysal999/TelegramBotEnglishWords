@@ -10,3 +10,13 @@ def main():
        ],
        [KeyboardButton(text='Посмотреть все словари 🗂️')],],resize_keyboard=True,one_time_keyboard=True,input_field_placeholder='enter command')
     return add_task
+
+
+def main_user():
+    main = ReplyKeyboardMarkup(keyboard=[[
+        KeyboardButton(text='Посмотреть Задачи ✏️'),
+    ],[
+       KeyboardButton(text='Посмотреть словари 🗂️')
+       ],
+            ],resize_keyboard=True,one_time_keyboard=True,input_field_placeholder='enter command')
+    return main

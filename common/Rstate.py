@@ -7,3 +7,10 @@ class TaskState(StatesGroup):
     photo = State()
     level = State()
     categoria = State()
+    options = State()
+
+class AddWordState(StatesGroup):
+    word = State()
+    value = State()
+    categoria = State()
+    photo = State()
