@@ -1,7 +1,8 @@
 import psycopg2
 
+from common.config import *
 
-conn = psycopg2.connect('dbname=task user=postgres password=maisal88')
+conn = psycopg2.connect(f'dbname={DBNAME} user={USER} password={PASS}')
 cur = conn.cursor()
 
 

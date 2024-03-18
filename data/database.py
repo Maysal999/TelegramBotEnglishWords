@@ -1,8 +1,9 @@
 from sqlite3 import Cursor
 import psycopg2
 
+from common.config import *
 
-conn = psycopg2.connect('dbname=englishbot user=postgres password=maisal88')
+conn = psycopg2.connect(f'dbname={DBNAME} user={USER} password={PASS}')
 cur = conn.cursor()
 class Base():
     def __init__(self,) -> None:
