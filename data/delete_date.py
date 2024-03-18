@@ -16,6 +16,6 @@ def select_categoria(categorias):
     #     cur.execute('select categoria from given_task where content = %s;',(categorias,))
     #     conn.commit()
 
-d = delete_date2(title='Щодо')
+# d = delete_date2(title='Щодо')
 
-print(d)
+# print(d)

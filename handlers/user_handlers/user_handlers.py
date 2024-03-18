@@ -19,3 +19,9 @@ async def main_r(message:Message):
     db = ViewDB()
     for i in db.word_view():
             await message.answer_photo(photo=i[4],caption=f'слова - <b>{i[1]}</b>\n<b>{i[2]}</b>',parse_mode=ParseMode('HTML'))
+
+# @start.message(F.text == 'Посмотреть Задачи ✏️')
+# async def task_view_tr(message: Message):
+#      db = ViewDB()
+#      for i in db.view_two_without_photo():
+          
