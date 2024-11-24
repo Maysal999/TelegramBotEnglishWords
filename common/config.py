@@ -1,7 +1,7 @@
-token = '7185870941:AAGdbAujt3NRoIrvCNkdAMWhLErhEo44zlc'
+token = '111'
 
-DBNAME = 'englishbot'
+DBNAME = '11'
 
 USER = 'postgres'
 
-PASS = 'maisal88' 
+PASS = '****' 
